@@ -134,7 +134,7 @@ class MyDataGrid extends Component {
             ><b>BUSCAR</b>
           </Button>  
         </div>
-        <div className="table">
+        <div className="table-reg">
           <ReactDataGrid
             columns={columns}
             rowGetter={i => rows[i]}

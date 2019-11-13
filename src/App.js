@@ -3,6 +3,7 @@ import ViewRegister from '../src/Components/convenios-tecas/ViewRegister';
 import ObsAsig from './Components/ObsAsig';
 import Login from './Components/Login';
 import ModOptions from './Components/ComOptions'
+import ModResume from './Components/ModRes';
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,6 +15,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Login}></Route>
+        <Route exact path="/res" component={ModResume}></Route>
         <Route exact path="/options" component={ModOptions}></Route>
         <Route exact path="/obs" component={ObsAsig}></Route>
         <Route exact path="/register"> <ViewRegister/>

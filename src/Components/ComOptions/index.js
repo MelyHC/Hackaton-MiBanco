@@ -12,43 +12,32 @@ class Options extends Component {
     render() {
         return(
             <React.Fragment>
+                <div className="menu-options">
                 <div className="cont-options">
                 <Header></Header>
                <div className="button-options">
-
-                <div className="cont-btn-asig" data-value="/obs" onClick={this.handleClick}>
-                <span className="obs-asig" >OBSERVACIONES DE ASIGNACIÓN</span>
-                <figure className="btn-obs-asig"></figure>
+                <div className="row p-0 m-0">
+<div className="col-md-5">
+                <div className="card m-3" data-value="/obs" onClick={this.handleClick}>
+                <span className="obs-asig card-body p-4 rounded-top" >OBSERVACIONES DE ASIGNACIÓN</span>
+                <figure className="btn-obs-asig img-fluid mb-0"></figure>
+                </div>
+                </div>
+                
+                <div className="col-md-7">
+                <div className="card m-3" data-value="/register" onClick={this.handleClick}>
+                <span className="obs-ct card-body p-4 rounded-top" >CONVENIOS Y TECAS</span>
+                <figure className="btn-obs-ct img-fluid mb-0"></figure>
                 </div>
 
-                <div className="cont-btn-ct" data-value="/register" onClick={this.handleClick}>
-                <span className="obs-ct" >CONVENIOS Y TECAS</span>
-                <figure className="btn-obs-ct"></figure>
+                <div className="card m-3" data-value="/res" onClick={this.handleClick}>
+                <span className="obs-res card-body p-4 rounded-top" >ASIGNACIÓN DE EJECUTIVOS</span>
+                <figure className="btn-obs-res img-fluid mb-0"></figure>
                 </div>
-
-                <div className="cont-btn-res" data-value="/res" onClick={this.handleClick}>
-                <span className="obs-res" >ASIGNACIÓN DE EJECUTIVOS</span>
-                <figure className="btn-obs-res"></figure>
                 </div>
-               {/* <Button variant="success"
-                  size="lg"
-                  onClick={this.handleClick}
-                  type="submit"  
-                  value="/register"
-                  >Registro de Convenio/ TECA</Button>
-                  <Button variant="success"
-                  size="lg"
-                  onClick={this.handleClick}
-                  type="submit"  
-                  value="/resumen"
-                  >Módulo de Resúmen</Button>
-                  <Button variant="success"
-                  size="lg"
-                  onClick={this.handleClick}
-                  type="submit"  
-                  value="/obs"
-                  >Observaciones de Asignación</Button> */}
+                </div>
                </div>
+                </div>
                 </div>
             </React.Fragment>
         )
