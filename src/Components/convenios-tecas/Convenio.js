@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Form, Col, InputGroup, Button } from 'react-bootstrap';
 
-const Convenio = () => {
+const Convenio = ({data, handleSave }) => {
   const [key, setKey] = useState('home');
   const [validated, setValidated] = useState(false);
   const handleSubmit = event => {
@@ -10,19 +10,21 @@ const Convenio = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
+  console.log(data)
   return (
+    
     <Tabs id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
       <Tab eventKey="home" title="Convenio">
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} md="3" controlId="validationCustom01">
-            <Form.Label>GERENTE TERRITORIO</Form.Label>
+            <Form.Label>GERENTE TERRITORIAL</Form.Label>
             <Form.Control
               required
               type="text"
+              value={data.TERRITORIAL}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
@@ -31,18 +33,18 @@ const Convenio = () => {
             <Form.Control
               required
               type="text"
-
+              value={data.SUPERVISOR}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
           <Form.Group as={Col} md="2" controlId="validationCustomUsername">
             <Form.Label>EJECUTIVO</Form.Label>
             <InputGroup>
-          
               <Form.Control
                 type="text"
                 aria-describedby="inputGroupPrepend"
                 required
+                value={data.EJECUTIVO}
               />
               <Form.Control.Feedback type="invalid">
                 Please choose a username.
@@ -53,8 +55,8 @@ const Convenio = () => {
         <Form.Row>
           <Form.Group as={Col} md="1" controlId="validationCustom03">
             <Form.Label>MONTO CUOTA</Form.Label>
-            <Form.Control type="text"  required />
-            <Form.Control.Feedback type="invalid">
+            <Form.Control type="text" />
+            <Form.Control.Feedback type="invalid" >
               Please provide a valid city.
             </Form.Control.Feedback>
           </Form.Group>
@@ -80,7 +82,11 @@ const Convenio = () => {
             </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
-        <Button variant="success" type="submit">GUARDAR</Button>
+        <Button variant="success"
+          size="lg"
+          onClick={handleSave }
+          type="submit"  
+        >GUARDAR</Button>
       </Form>
       </Tab>
     </Tabs>

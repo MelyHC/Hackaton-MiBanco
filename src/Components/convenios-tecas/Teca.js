@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Form, Col, InputGroup, Button } from 'react-bootstrap';
 
-const Teca = () => {
+const Teca = ({data, handleSave }) => {
   const [key, setKey] = useState('home');
   const [validated, setValidated] = useState(false);
   const handleSubmit = event => {
@@ -19,10 +19,11 @@ const Teca = () => {
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} md="3" controlId="validationCustom01">
-            <Form.Label>GERENTE TERRITORIO</Form.Label>
+            <Form.Label>GERENTE TERRITORIAL</Form.Label>
             <Form.Control
               required
               type="text"
+              value={data.TERRITORIAL}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
@@ -31,7 +32,7 @@ const Teca = () => {
             <Form.Control
               required
               type="text"
-
+              value={data.SUPERVISOR}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
@@ -43,6 +44,7 @@ const Teca = () => {
                 type="text"
                 aria-describedby="inputGroupPrepend"
                 required
+                value={data.EJECUTIVO}
               />
               <Form.Control.Feedback type="invalid">
                 Please choose a username.
@@ -52,7 +54,7 @@ const Teca = () => {
         </Form.Row>
         <Form.Row>
           <Form.Group as={Col} md="1" controlId="validationCustom03">
-            <Form.Label>MONTO CUOTA</Form.Label>
+            <Form.Label>INICIAL</Form.Label>
             <Form.Control type="text"  required />
             <Form.Control.Feedback type="invalid">
               Please provide a valid city.
@@ -87,7 +89,11 @@ const Teca = () => {
             </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
-        <Button variant="success" type="submit">GUARDAR</Button>
+        <Button variant="success"
+                    size="lg"
+                    onClick={handleSave}
+                    type="submit"  
+                    >GUARDAR</Button>
       </Form>
       </Tab>
     </Tabs>
