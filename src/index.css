@@ -211,8 +211,26 @@ justify-content: center;
     padding-left: 5em;
 }
 
-.scroll {
+
+.table{
+    display: inline-block;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
     overflow: scroll;
-    width: 85%;
-    height: 330px;
+}
+
+.col-6{
+    flex: 0 0 50%;
+    max-width: 50%;
+    height: 50vh;
+}
+
+.popup{
+    background-color: lawngreen;
+}
+.mod-res{
+    width: 100%;
 }
