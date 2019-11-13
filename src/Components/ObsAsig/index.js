@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { range } from 'lodash';
 import ReactDataGrid from 'react-data-grid'; // Tested with v5.0.4, earlier versions MAY NOT HAVE cellRangeSelection
 import { logout, db } from '../../Firebase';
-import {Button} from 'react-bootstrap';
+import {Button, Container, Row, Col, Image} from 'react-bootstrap';
 
 
 const columns = [
@@ -226,8 +226,18 @@ class MyDataGrid extends Component {
     const { rows } = this.state;
     const newRows = rows.concat(row0);
     return (
-      <div>
-        <ReactDataGrid
+     
+     <React.Fragment>
+
+<Container>
+  <Row>
+    <Col xs={8} md={8}>
+      <Image src="https://i.postimg.cc/8kfhHMct/logo-Mibanco-04.png/" rounded />
+    </Col>
+  </Row>
+</Container>
+
+       <ReactDataGrid
           columns={columns}
           rowGetter={i => newRows[i]}
           rowsCount={newRows.length}
@@ -249,7 +259,8 @@ class MyDataGrid extends Component {
                     onClick={this.handleSave}
                     type="submit"  
                     >Guardar</Button>
-      </div>
+      
+     </React.Fragment>   
 
     );
   }

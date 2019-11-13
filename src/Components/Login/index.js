@@ -28,11 +28,12 @@ class Login extends Component  {
   render () {
       return(
 
-        <React.Fragment>
-            <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-            <InputGroup.Text >@</InputGroup.Text>
-            </InputGroup.Prepend>
+        <div className="cont-login">
+          <figure className="logo-login"></figure>
+          <div className="login">
+          <label>Código de Matrícula</label>
+          <InputGroup className="mb-3">
+
             <FormControl
             id="user"
             placeholder="Usuario"
@@ -41,10 +42,8 @@ class Login extends Component  {
             onChange={this.handleChange}
             />
             </InputGroup>
+            <label>Contraseña</label>
             <InputGroup className="mb-3">
-            <InputGroup.Prepend>
-            <InputGroup.Text >#</InputGroup.Text>
-            </InputGroup.Prepend>
             <FormControl
             id="password"
             type="password"
@@ -59,7 +58,8 @@ class Login extends Component  {
             type="submit"  
             value="/options"
             >Login</Button>
-        </React.Fragment>
+          </div>
+        </div>
 
       )
   };

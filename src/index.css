@@ -1,0 +1,140 @@
+* {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    text-decoration: none;
+    list-style-type: none;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    outline: none;
+    position: relative;
+  }
+  html,body, #root{
+    height: 100%;
+    width: 100%;
+    display: flex;
+  }
+  .cont-login{
+      height: 100%;
+      width: 100%;
+      background-color: #00a651;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+  }
+
+    .logo-login{
+        height: 150px;
+        width: 240px;
+        background-image: url(https://i.postimg.cc/fT3fzvyh/mibanco.png);
+        background-size: cover;
+        z-index: 4;
+        bottom: 2em;
+    }
+  .login{
+      background-color: white;
+      height: 19em;
+      width: 22em;
+      padding: 3em;
+      border-radius: 25px;
+  }
+
+/* FIN DE LOGIN--------------------------------------------------------------------------------- */
+
+.header{
+background-color: white;
+display: inline-block;
+flex-direction: column;
+margin-top: 0;
+height: 8em;
+width: 100vw;
+padding: 1em;
+border-bottom: solid black 1px;
+z-index: 3;
+
+}
+.logo-header{
+    background-image: url("https://i.postimg.cc/8kfhHMct/logo-Mibanco-04.png");
+    height: 90px;
+    width: 160px;
+    background-size: cover;
+    margin-top: 0.5em;
+    margin-left: 2em;
+}
+
+
+/* FIN DE HEADER ----------------------------------------------------------------------------------*/
+
+.cont-btn-asig{
+ max-height: min-content;
+ background-color:transparent;
+ width: 300px;
+margin-top: 4em;
+margin-left: 4em;
+border-radius: 5px;
+}
+
+.btn-obs-asig{
+    background-image: url("https://i.postimg.cc/rwbxHJHz/images.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 16em;
+    border-radius: 5px;
+}
+
+.obs-asig{
+    color: white;
+    padding: 1em;
+    background-color: #ffd100;
+    border-radius: 5px;
+}
+
+.cont-btn-ct{
+    max-height: min-content;
+    background-color: transparent;
+    width: 300px;
+    bottom: 11em;
+    margin-left: 32em;
+    border-radius: 5px;
+   }
+   
+   .btn-obs-ct{
+       background-image: url("https://i.postimg.cc/zfx9MNPS/images-1.jpg");
+       background-size: contain;
+       background-repeat: no-repeat;
+       height: 16em;
+       border-radius: 5px;
+   }
+   
+   .obs-ct{
+       color: white;
+       padding: 1em;
+       background-color: #ffd100;
+       border-radius: 5px;
+   }
+
+   .cont-btn-res{
+    max-height: min-content;
+    background-color: transparent;
+    width: 300px;
+    bottom: 4em;
+    margin-left: 32em;
+    border-radius: 5px;
+   }
+   
+   .btn-obs-res{
+       background-image: url("https://i.postimg.cc/65KYdSM9/3-L5-HQRD5-SFFZRGXOJYM7-LTPGEU.jpg");
+       background-size: contain;
+       background-repeat: no-repeat;
+       height: 16em;
+       border-radius: 5px;
+   }
+   
+   .obs-res{
+       color: white;
+       padding: 1em;
+       background-color: #ffd100;
+       border-radius: 5px;
+   }
