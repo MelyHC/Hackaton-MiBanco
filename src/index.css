@@ -109,77 +109,77 @@ justify-content: center;
    
    .btn-obs-asig{
        background-image: url("https://i.postimg.cc/rwbxHJHz/images.jpg");
-       background-size: contain;
+       background-size: cover;
        background-repeat: no-repeat;
-       height: 16em;
-       border-radius: 5px;
+       height: 50vh;
+       /* border-radius: 5px; */
    }
    
    .obs-asig{
        color: white;
-       padding: 1em;
+       /* padding: 1em; */
        background-color: #ffd100;
-       border-radius: 5px;
+       /* border-radius: 5px; */
    }
    
    .cont-btn-ct{
 
        background-color: transparent;
-       width: 300px;
+       /* width: 300px; */
        border-radius: 5px;
       }
       
       .btn-obs-ct{
           background-image: url("https://i.postimg.cc/zfx9MNPS/images-1.jpg");
-          background-size: contain;
+          background-size: cover;
           background-repeat: no-repeat;
-          height: 16em;
-          border-radius: 5px;
+          height: 22vh;
+          /* border-radius: 5px; */
       }
       
       .obs-ct{
           color: white;
-          padding: 1em;
+          /* padding: 1em; */
           background-color: #ffd100;
-          border-radius: 5px;
+          /* border-radius: 5px; */
       }
    
       .cont-btn-res{
 
        background-color: transparent;
-       width: 300px;
+       /* width: 300px; */
 
-       border-radius: 5px;
+       /* border-radius: 5px; */
       }
       
       .btn-obs-res{
           background-image: url("https://i.postimg.cc/65KYdSM9/3-L5-HQRD5-SFFZRGXOJYM7-LTPGEU.jpg");
-          background-size: contain;
+          background-size: cover;
           background-repeat: no-repeat;
-          height: 16em;
-          border-radius: 5px;
+          height: 22vh;
+          /* border-radius: 5px; */
       }
       
       .obs-res{
           color: white;
-          padding: 1em;
+          /* padding: 1em; */
           background-color: #ffd100;
-          border-radius: 5px;
+          /* border-radius: 5px; */
       }
 
 .btn-obs-asig{
     background-image: url("https://i.postimg.cc/rwbxHJHz/images.jpg");
-    background-size: contain;
+    background-size: cover;
     background-repeat: no-repeat;
-    height: 16em;
-    border-radius: 5px;
+    height: 55vh;
+    /* border-radius: 5px; */
 }
 
 .obs-asig{
     color: white;
-    padding: 1em;
+    /* padding: 1em; */
     background-color: #ffd100;
-    border-radius: 5px;
+    /* border-radius: 5px; */
 }
 .btn-back{
     border-radius: 50%;
@@ -209,4 +209,10 @@ justify-content: center;
 }
 .btn-header{
     padding-left: 5em;
+}
+
+.scroll {
+    overflow: scroll;
+    width: 85%;
+    height: 330px;
 }
