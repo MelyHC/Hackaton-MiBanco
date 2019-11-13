@@ -1,7 +1,8 @@
 import React from 'react';
 import ViewRegister from '../src/Components/convenios-tecas/ViewRegister';
-import ModResume from './Components/ModuloResumen';
+import ObsAsig from './Components/ObsAsig';
 import Login from './Components/Login';
+import ModOptions from './Components/ComOptions'
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +14,9 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Login}></Route>
-        <Route exact path="/resume" component={ModResume}></Route>
+        {/* <Route exact path="/resume" component={ModResume}></Route> */}
+        <Route exact path="/options" component={ModOptions}></Route>
+        <Route exact path="/obs" component={ObsAsig}></Route>
         <Route exact path="/register"> <ViewRegister/>
     </Route>
       </Switch>

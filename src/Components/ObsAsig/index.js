@@ -39,18 +39,13 @@ class MyDataGrid extends Component {
   }
 
   componentWillMount() {
-  
+    const currentRows = [];
     db.collection("ObsAsig").get().then((doc) => {
       doc.forEach(obs => {
-      
-    for (const key in obs.data()) {
-        if (obs.data().hasOwnProperty(key)) {
-        const element = obs.data()[key];
-        console.log(key, element)
-        }
-    }                                     
+        currentRows.push(obs.data());
       }
       )
+      this.setState({ rows: currentRows });
     }).catch((error) => {
       console.log("ERROR:", error);
     }
@@ -60,8 +55,8 @@ class MyDataGrid extends Component {
 
   handleLogout = (e) => {
     e.preventDefault();
-      logout()
-      .then(()=>{
+    logout()
+      .then(() => {
         this.props.history.push("/");
       })
       .catch((e) => {
@@ -168,8 +163,6 @@ class MyDataGrid extends Component {
   };
 
   render() {
-      console.log(this.state);
-      
     const { rows } = this.state;
     return (
       <div>
