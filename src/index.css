@@ -57,6 +57,11 @@ padding: 1em;
 border-bottom: solid black 1px;
 z-index: 3;
 }
+
+.border{
+    border-bottom: solid black 1px;
+}
+
 .logo-header{
     background-image: url("https://i.postimg.cc/8kfhHMct/logo-Mibanco-04.png");
     height: 90px;
@@ -222,7 +227,7 @@ justify-content: center;
     overflow: scroll;
 }
 
-.col-6{
+.scroll{
     flex: 0 0 50%;
     max-width: 50%;
     height: 50vh;
