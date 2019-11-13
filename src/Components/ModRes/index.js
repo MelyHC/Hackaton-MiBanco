@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { logout, db } from '../../Firebase';
 import Popup from "reactjs-popup";
+import {Link} from 'react-router-dom';
+import { Button} from 'react-bootstrap';
 
 
 class ModRes extends Component {
@@ -120,11 +122,22 @@ class ModRes extends Component {
 
     return (
       <div className="mod-res">
-        <header className="d-flex justify-content-between align-items-center border">
+                              <header className=" button-reg">
+            <div>
+              <figure className="logo-header"></figure> 
+            </div>
+            <div> 
+              <h3 className="h1-header">ASIGNACIÓN DE EJECUTIVOS</h3>
+            </div>
+            <div>  <Link className="link-reg" to ="/"><Button variant="outline-success" type="submit" ><b> SALIR</b> </Button></Link>
+            </div>
+          </header>
+          
+        {/* <header className="d-flex justify-content-between align-items-center border">
           <figure className="logo-header"></figure> 
           <h1 className="">ASIGNACIÓN DE EJECUTIVOS</h1>
           <button className="btn" onClick={this.handleLogout}>Salir</button>
-        </header>
+        </header> */}
         <div className="d-flex p-4 ">
         <select name="zona" className="form-control m-2 w-auto">
           <option value="LimaNorte">Lima Norte</option>

@@ -3,6 +3,7 @@ import { range } from 'lodash';
 import ReactDataGrid from 'react-data-grid'; // Tested with v5.0.4, earlier versions MAY NOT HAVE cellRangeSelection
 import { logout, db } from '../../Firebase';
 import {Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 
 
@@ -214,9 +215,16 @@ class MyDataGrid extends Component {
     const newRows = rows.concat(row0);
     return (
       <div className="cont-obs-asig-mod">
-                    <header className="header">
-                <figure className="logo-header"></figure>
-            </header>
+                    <header className=" button-reg">
+            <div>
+              <figure className="logo-header"></figure> 
+            </div>
+            <div> 
+              <h3 className="h1-header">OBSERVACIONES DE ASIGNACIÓN</h3>
+            </div>
+            <div>  <Link className="link-reg" to ="/"><Button variant="outline-success" type="submit" ><b> SALIR</b> </Button></Link>
+            </div>
+          </header>
       <div className="table">
       <ReactDataGrid
           columns={columns}
@@ -225,18 +233,13 @@ class MyDataGrid extends Component {
           onGridRowsUpdated={this.onGridRowsUpdated}
           enableCellSelect
           minColumnWidth={40}
-          minHeight={200}
+          minHeight={50}
           cellRangeSelection={{
             onComplete: this.setSelection,
           }}
         />
       </div>
           <div>
-
-        <Button variant="outline-success"
-                    size="lg"
-                    onClick={this.handleLogout}
-                    >Salir</Button>
 
          <Button variant="outline-success"
                     size="lg"
