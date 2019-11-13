@@ -120,12 +120,18 @@ class ModRes extends Component {
 
     return (
       <div className="mod-res">
-        <select name="zona" className="form-control m-2">
+        <header className="d-flex justify-content-between align-items-center border">
+          <figure className="logo-header"></figure> 
+          <h1 className="">ASIGNACIÓN DE EJECUTIVOS</h1>
+          <button className="btn" onClick={this.handleLogout}>Salir</button>
+        </header>
+        <div className="d-flex p-4 ">
+        <select name="zona" className="form-control m-2 w-auto">
           <option value="LimaNorte">Lima Norte</option>
           <option value="LimaCentro">Lima Centro</option>
           <option value="LImaSur">Lima Sur</option>
         </select>
-        <select name="Modelo" className="form-control m-2" onChange={(e) => this.filterData(e)}>
+        <select name="Modelo" className="form-control m-2 w-auto" onChange={(e) => this.filterData(e)}>
           <option disable="true" selected hidden>Modulo</option>
           <option value="Todos">Todos</option>
           <option value="Recuperación">Recuperación</option>
@@ -133,9 +139,10 @@ class ModRes extends Component {
           <option value="Multitramo">Multitramo</option>
           <option value="Resolución">Resolución</option>
         </select>
-        <div className="row">
-          <div className="col-6">
-            <table className="table">
+        </div>
+        <div className="row m-0 p-0">
+          <div className="scroll col-md-6">
+            <table className="table table-hover w-100">
               <thead>
                 <tr>
                   <th scope="col">Agencia</th>
@@ -143,7 +150,7 @@ class ModRes extends Component {
                   <th scope="col">Saldo</th>
                 </tr>
               </thead>
-              <tbody className="scroll">
+              <tbody className="">
                 {
                   filterGroup.length !== 0 ? filterGroup.map(({ SALDO, AGENCIA, MODELO, CLIENTES }, key) =>
                     <tr key={key} onClick={() => this.selectAgent(AGENCIA, MODELO)}>
@@ -155,7 +162,7 @@ class ModRes extends Component {
                 }</tbody>
             </table>
           </div>
-          <div className="col-6">
+          <div className="col-md-6">
             <table className="table">
               <thead>
                 <tr>
@@ -185,14 +192,14 @@ class ModRes extends Component {
             </table>
           </div>
         </div>
-        <Popup className="popup" trigger={<button className="btn btn-success">Guardar</button>} position="rigth">
+        <div className="d-flex justify-content-center">
+        <Popup className="popup" trigger={<button className="btn btn-success rounded-pill m-3 px-4">Guardar</button>} position="rigth">
     <div>CAMBIOS REALIZADO EXITOSAMENTE</div>
     <button onClick={this.handlePopUp}>ACEPTAR</button>
   </Popup>
         
-        <button >Volver</button>
-
-        <button onClick={this.handleLogout}>Salir</button>
+        <button className="btn m-3 px-4">Volver</button>
+        </div>
       </div>
     );
   }
