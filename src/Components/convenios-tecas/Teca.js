@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Form, Col, InputGroup, Button } from 'react-bootstrap';
 import {Link} from 'react-router-dom';
-import back from '../Css/back.png';
+
 
 const Teca = ({data, handleSave }) => {
   const [key, setKey] = useState('home');
