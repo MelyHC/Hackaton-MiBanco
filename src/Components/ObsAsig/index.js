@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { range } from 'lodash';
 import ReactDataGrid from 'react-data-grid'; // Tested with v5.0.4, earlier versions MAY NOT HAVE cellRangeSelection
 import { logout, db } from '../../Firebase';
+import {Button} from 'react-bootstrap';
 
 
 const columns = [
   { key: 'CODIGO_CLIENTE', name: 'CODIGO_CLIENTE', editable: true },
   { key: 'EDR_ANTERIOR', name: 'EDR_ANTERIOR' },
-  { key: 'EDR_ASIGNADO', name: 'EDR_ASIGNADO' },
+  { key: 'EDR ASIGNADO', name: 'EDR ASIGNADO' },
   { key: 'HERRAMIENTA', name: 'HERRAMIENTA' },
   { key: 'EDR_SUPER', name: 'EDR_SUPER', editable: true },
   { key: 'JUSTIFICACION', name: 'JUSTIFICACION', editable: true },
@@ -52,7 +53,7 @@ class MyDataGrid extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rows: [row0],
+      rows: [],
       topLeft: {},
       botRight: {},
     };
@@ -72,6 +73,17 @@ class MyDataGrid extends Component {
       .catch((e) => {
         alert(e.message);
       })
+  }
+
+  handleSave = (e) => {
+    e.preventDefault()
+    const stateArray = this.state.rows;
+    stateArray.forEach(elem =>
+      db.collection("DataBase").doc(elem.Id).update(elem)
+      )
+    this.setState({
+      rows:[],
+    })
   }
 
   componentWillUnmount() {
@@ -160,13 +172,15 @@ class MyDataGrid extends Component {
   //   );
   // }
   getFirebaseData = (client) => {
-    let currentRows= [];
+    let currentRows= this.state.rows;
     db.collection("DataBase").where("CODIGO_CLIENTE", '==', client).get().then((doc) => {
       doc.forEach(obs => {
-        currentRows.push(obs.data())
+        const dataObj = obs.data();
+        dataObj.Id=obs.id
+        
+        currentRows.push(dataObj)
       }
       )
-
       this.setState({ rows: currentRows });
     }).catch((error) => {
       console.log("ERROR:", error);
@@ -189,6 +203,8 @@ class MyDataGrid extends Component {
         for (let i = fromRow; i <= toRow; i++) {
           rows[i] = { ...rows[i], ...updated };
         }
+        
+        
         return { rows };
       });
     }
@@ -209,13 +225,13 @@ class MyDataGrid extends Component {
 
   render() {
     const { rows } = this.state;
+    const newRows = rows.concat(row0);
     return (
       <div>
         <ReactDataGrid
           columns={columns}
-          rowGetter={i => rows[i]
-          }
-          rowsCount={rows.length}
+          rowGetter={i => newRows[i]}
+          rowsCount={newRows.length}
           onGridRowsUpdated={this.onGridRowsUpdated}
           enableCellSelect
           minColumnWidth={40}
@@ -223,7 +239,17 @@ class MyDataGrid extends Component {
             onComplete: this.setSelection,
           }}
         />
-        <button onClick={this.handleLogout}>Salir</button>
+
+        <Button variant="success"
+                    size="lg"
+                    onClick={this.handleLogout}
+                    >Salir</Button>
+
+         <Button variant="success"
+                    size="lg"
+                    onClick={this.handleSave}
+                    type="submit"  
+                    >Guardar</Button>
       </div>
 
     );
