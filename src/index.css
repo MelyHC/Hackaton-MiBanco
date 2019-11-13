@@ -10,6 +10,7 @@
             box-sizing: border-box;
     outline: none;
     position: relative;
+  
     height: 100%;
     width: 100%;
     display: flex;
@@ -45,6 +46,25 @@
 
 /* FIN DE LOGIN--------------------------------------------------------------------------------- */
 
+.header{
+background-color: white;
+display: inline-block;
+flex-direction: column;
+margin-top: 0;
+height: 8em;
+width: 100vw;
+padding: 1em;
+border-bottom: solid black 1px;
+z-index: 3;
+}
+.logo-header{
+    background-image: url("https://i.postimg.cc/8kfhHMct/logo-Mibanco-04.png");
+    height: 90px;
+    width: 160px;
+    background-size: cover;
+    margin-top: 0.5em;
+    margin-left: 2em;
+}
 
 .header{
     background-color: white;
@@ -147,3 +167,46 @@ justify-content: center;
           border-radius: 5px;
       }
 
+.btn-obs-asig{
+    background-image: url("https://i.postimg.cc/rwbxHJHz/images.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 16em;
+    border-radius: 5px;
+}
+
+.obs-asig{
+    color: white;
+    padding: 1em;
+    background-color: #ffd100;
+    border-radius: 5px;
+}
+.btn-back{
+    border-radius: 50%;
+}
+.h1-header{
+    margin-top: -6%;
+    text-align: center;
+    padding: 1%;
+}
+.table-padding{
+    padding: 2%;
+    width: 90%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.view{
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+}
+.imput-cod-cli{
+    width: 15%;
+    padding: 1em;
+    margin: 1em;
+    font-size: 1.2em;
+}
+.btn-header{
+    padding-left: 5em;
+}
