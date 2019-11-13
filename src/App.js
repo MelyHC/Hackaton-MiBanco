@@ -14,7 +14,11 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Login}></Route>
+<<<<<<< HEAD
         {/* <Route exact path="/resume" component={ModResume}></Route> */}
+=======
+
+>>>>>>> dad3464c0d5739363b54576af52296cbc3647eb5
         <Route exact path="/options" component={ModOptions}></Route>
         <Route exact path="/obs" component={ObsAsig}></Route>
         <Route exact path="/register"> <ViewRegister/>

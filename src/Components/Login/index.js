@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { authUser } from '../../Firebase';
+import {Button, FormControl, InputGroup} from 'react-bootstrap';
 
 class Login extends Component  {
   state = {
@@ -26,16 +27,40 @@ class Login extends Component  {
 
   render () {
       return(
-        <div className="login-page">
-        <div className="form">
-        {/* <img className="login-logo" src={logo} alt="login logo"/> */}
-          <form className="login-form" onSubmit={this.handleSubmit}>
-            <input type="text" placeholder="username" id="user" onChange={this.handleChange}/>
-            <input type="password" placeholder="password" id="password" onChange={this.handleChange}/>
-            <button>login</button>
-          </form>
-        </div>
-      </div>
+
+        <React.Fragment>
+            <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+            <InputGroup.Text >@</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+            id="user"
+            placeholder="Usuario"
+            aria-label="Username"
+            aria-describedby="user"
+            onChange={this.handleChange}
+            />
+            </InputGroup>
+            <InputGroup className="mb-3">
+            <InputGroup.Prepend>
+            <InputGroup.Text >#</InputGroup.Text>
+            </InputGroup.Prepend>
+            <FormControl
+            id="password"
+            type="password"
+            placeholder="Contraseña"
+            aria-label="Username"
+            aria-describedby="password"
+            onChange={this.handleChange}
+            />
+            </InputGroup>
+            <Button variant="success"
+            onClick={this.handleSubmit}
+            type="submit"  
+            value="/options"
+            >Login</Button>
+        </React.Fragment>
+
       )
   };
         
