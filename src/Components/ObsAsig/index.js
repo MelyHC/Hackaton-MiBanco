@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { range } from 'lodash';
 import ReactDataGrid from 'react-data-grid'; // Tested with v5.0.4, earlier versions MAY NOT HAVE cellRangeSelection
 import { logout, db } from '../../Firebase';
-import {Button, Container, Row, Col, Image} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+
+
 
 
 const columns = [
-  { key: 'CODIGO_CLIENTE', name: 'CODIGO_CLIENTE', editable: true },
-  { key: 'EDR_ANTERIOR', name: 'EDR_ANTERIOR' },
-  { key: 'EDR ASIGNADO', name: 'EDR ASIGNADO' },
-  { key: 'HERRAMIENTA', name: 'HERRAMIENTA' },
-  { key: 'EDR_SUPER', name: 'EDR_SUPER', editable: true },
+  { key: 'CODIGO_CLIENTE', name: 'CODIGO CLIENTE', editable: true , width:170},
+  { key: 'EDR_ANTERIOR', name: 'EDR ANTERIOR', width:150 },
+  { key: 'EDR_ASIGNADO', name: 'EDR ASIGNADO' , width:150},
+  { key: 'HERRAMIENTA', name: 'HERRAMIENTA', width:150 },
+  { key: 'EDR_SUPER', name: 'EDR SUPER', editable: true, width:150 },
   { key: 'JUSTIFICACION', name: 'JUSTIFICACION', editable: true },
 ];
 
@@ -81,7 +83,7 @@ class MyDataGrid extends Component {
       db.collection("DataBase").doc(elem.Id).update(elem)
       )
     this.setState({
-      rows:[],
+      rows:[row0],
     })
   }
 
@@ -212,18 +214,12 @@ class MyDataGrid extends Component {
     const { rows } = this.state;
     const newRows = rows.concat(row0);
     return (
-     
-     <React.Fragment>
-
-<Container>
-  <Row>
-    <Col xs={8} md={8}>
-      <Image src="https://i.postimg.cc/8kfhHMct/logo-Mibanco-04.png/" rounded />
-    </Col>
-  </Row>
-</Container>
-
-       <ReactDataGrid
+      <div className="cont-obs-asig-mod">
+                    <header className="header">
+                <figure className="logo-header"></figure>
+            </header>
+      <div className="table">
+      <ReactDataGrid
           columns={columns}
           rowGetter={i => newRows[i]}
           rowsCount={newRows.length}
@@ -234,6 +230,7 @@ class MyDataGrid extends Component {
             onComplete: this.setSelection,
           }}
         />
+      </div>
 
         <Button variant="success"
                     size="lg"
@@ -246,7 +243,7 @@ class MyDataGrid extends Component {
                     type="submit"  
                     >Guardar</Button>
       
-     </React.Fragment>   
+      </div>
 
     );
   }
