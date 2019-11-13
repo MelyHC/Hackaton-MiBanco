@@ -14,7 +14,7 @@ function App() {
     <Router>
       <Switch>
         <Route exact path="/" component={Login}></Route>
-        <Route exact path="/resume" component={ModResume}></Route>
+
         <Route exact path="/options" component={ModOptions}></Route>
         <Route exact path="/obs" component={ObsAsig}></Route>
         <Route exact path="/register"> <ViewRegister/>
