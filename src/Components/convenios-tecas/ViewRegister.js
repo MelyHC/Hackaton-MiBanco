@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid'; // Tested with v5.0.4, earlier versions MAY NOT HAVE cellRangeSelection
 import { logout, db } from '../../Firebase';
-import { Form, Col, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
+import { Form, Button} from 'react-bootstrap';
 import Convenio from './Convenio';
 import Teca from './Teca';
 import back from '../Css/back.png';
 
+
 const columns = [
-  { key: 'Id', name: 'NRO', editable: true },
-  { key: 'MODELO', name: 'MODELO', editable: true },
-  { key: 'CODIGO_CLIENTE', name: 'CODIGO CLIENTE', editable: true },
-  { key: 'NOMBRE_CLIENTE', name: 'NOMBRE CLIENTE', editable: true },
-  { key: 'TIPO_DOC', name: 'TIPO DOCUMENTO', editable: true },
-  { key: 'CODIGO_PRESTAMO', name: 'CODIGO PRESTAMO', editable: true },
-  { key: 'DIAS_MORA', name: 'DIAS DE MORA', editable: true },
-  { key: 'ESTADO', name: 'ESTADO', editable: true },
-  { key: 'SALDO_AGENCIA', name: 'SALDO', editable: true },
-  { key: 'MONEDA', name: 'MONEDA', editable: true },
+  { key: 'Id', name: 'NRO', width:60 },
+  { key: 'MODELO', name: 'MODELO', width:150},
+  { key: 'CODIGO_CLIENTE', name: 'CODIGO CLIENTE', width:180},
+  { key: 'NOMBRE_CLIENTE', name: 'NOMBRE CLIENTE',width:220},
+  { key: 'TIPO_DOC', name: 'TIPO DOC', width:120 },
+  { key: 'CODIGO_PRESTAMO', name: 'CODIGO PRESTAMO', width:170 },
+  { key: 'DIAS_MORA', name: 'DIAS DE MORA', width:150 },
+  { key: 'ESTADO', name: 'ESTADO', width:120},
+  { key: 'SALDO_AGENCIA', name: 'SALDO', width:130},
+  { key: 'MONEDA', name: 'MONEDA', width:120 },
 ];
 
 class MyDataGrid extends Component {
@@ -36,8 +38,6 @@ class MyDataGrid extends Component {
     const {client} = this.state;
     db.collection("DataBase").where('CODIGO_CLIENTE','==', client).get().then((doc) => {
       doc.forEach(obs => {
-      //   currentRows.push(obs.data());
-      //  console.log(obs.data());
       const dataObj = obs.data();
       dataObj.Id=obs.id
       currentRows.push(dataObj)
@@ -65,16 +65,16 @@ class MyDataGrid extends Component {
     })
   }
 
-  handleLogout = (e) => {
-    e.preventDefault();
-    logout()
-      .then(() => {
-        this.props.history.push("/");
-      })
-      .catch((e) => {
-        alert(e.message);
-      })
-  }
+  // handleLogout = (e) => {
+  //   e.preventDefault();
+  //   logout()
+  //     .then(() => {
+  //       this.props.history.push("/");
+  //     })
+  //     .catch((e) => {
+  //       alert(e.message);
+  //     })
+  // }
 
   rowGetter = (i) => {
     const { rows } = this.state;
@@ -109,24 +109,26 @@ class MyDataGrid extends Component {
   render() {
     const { rows } = this.state;
     return (
-      <div>
-         <div>
-            <Form.Group as={Col} md="3" controlId="validationCustom">
-              <Form.Label>CÓDIGO DEL CLIENTE:
-                <Form.Control
-                  required
-                  type="text"
-                  className="imput-cod-cli"
-                  onChange={ e => this.setState({client: parseInt(e.target.value)})}
-                />  
-              </Form.Label>
-                <Button variant="success"
-                  onClick={()=>this.handlebtn()}
-                  type="submit"  
-                  value="btn"
-                >BUSCAR</Button>
-              </Form.Group>
-          </div>
+      <div className="view">
+        <header className="header">
+          <figure className="logo-header"></figure> 
+          <h1 className="h1-header">MÓDULO DE CONVENIOS Y TECAS</h1>
+        </header>
+        <div className="table-padding"> 
+         <Form.Label><b>CÓDIGO DEL CLIENTE:</b></Form.Label>
+         <Form.Control
+              required
+              type="text"
+              className="imput-cod-cli"
+              onChange={ e => this.setState({client: parseInt(e.target.value)})}
+          />  
+          <Button variant="success"
+              onClick={()=>this.handlebtn()}
+              type="submit"  
+              value="btn"
+            ><b>BUSCAR</b>
+          </Button>  
+        </div>
         <ReactDataGrid
           columns={columns}
           rowGetter={i => rows[i]}
@@ -140,7 +142,7 @@ class MyDataGrid extends Component {
         />
         {rows.length === 0 &&
             <div className="mt-5 w-100 text-align">
-            Elije al cliente para registrar el Convenio o Teca!!!
+              <h3>Elije al cliente para registrar el Convenio o Teca!!!</h3>
             </div>}
           {rows.length !== 0 &&
             rows.map(el => {
@@ -151,8 +153,8 @@ class MyDataGrid extends Component {
               }
             })
           }
-        <button onClick={this.handleLogout}>CERRAR SESION </button>
-        <button onClick={this.handleLogout}><img src={back} alt="ATRÁS"/> </button>
+        <Link to ="/"><Button  variant="success"  size="lg" type="submit"  >CERRAR SESIÓN </Button></Link>
+        <Link to ="/options"><button variant="success" className="btn-back"><img src={back} alt="ATRÁS"/> </button></Link>
       </div>
     );
   }
