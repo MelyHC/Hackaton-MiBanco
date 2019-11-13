@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { range } from 'lodash';
 import ReactDataGrid from 'react-data-grid'; // Tested with v5.0.4, earlier versions MAY NOT HAVE cellRangeSelection
 import { logout, db } from '../../Firebase';
 import { Form, Col, Button} from 'react-bootstrap';
 import Convenio from './Convenio';
 import Teca from './Teca';
-
+import back from '../Css/back.png';
 
 const columns = [
   { key: 'Id', name: 'NRO', editable: true },
@@ -20,11 +19,6 @@ const columns = [
   { key: 'MONEDA', name: 'MONEDA', editable: true },
 ];
 
-const defaultParsePaste = str => (
-  str.split(/\r\n|\n|\r/)
-    .map(row => row.split('\t'))
-);
-
 class MyDataGrid extends Component {
   constructor(props) {
     super(props);
@@ -34,10 +28,7 @@ class MyDataGrid extends Component {
       botRight: {},
       client:'',
     };
- 
-    // Copy paste event handler
-    document.addEventListener('copy', this.handleCopy);
-    document.addEventListener('paste', this.handlePaste);
+
   }
 
   handlebtn =()=> {
@@ -45,17 +36,34 @@ class MyDataGrid extends Component {
     const {client} = this.state;
     db.collection("DataBase").where('CODIGO_CLIENTE','==', client).get().then((doc) => {
       doc.forEach(obs => {
-        currentRows.push(obs.data());
-       console.log(obs.data());
+      //   currentRows.push(obs.data());
+      //  console.log(obs.data());
+      const dataObj = obs.data();
+      dataObj.Id=obs.id
+      currentRows.push(dataObj)
+      console.log(dataObj);
+      console.log(currentRows);
       })
       this.setState({ rows: currentRows });
+
     }).catch((error) => {
       console.log("ERROR:", error);
     }
     );
   }
-  
-  
+    
+  handleSave = (e) => {
+    e.preventDefault()
+    const stateArray = this.state.rows;
+    stateArray.forEach(elem =>
+      db.collection("DataBase").doc(elem.Id).update(elem)
+      )
+      console.log(stateArray);
+    this.setState({
+      rows:[],
+   
+    })
+  }
 
   handleLogout = (e) => {
     e.preventDefault();
@@ -84,64 +92,6 @@ class MyDataGrid extends Component {
       return { rows };
     });
   }
-
-  handleCopy = (e) => {
-    console.debug('handleCopy Called');
-    e.preventDefault();
-    const { topLeft, botRight } = this.state;
-
-    // Loop through each row
-    const text = range(topLeft.rowIdx, botRight.rowIdx + 1).map(
-      // Loop through each column
-      rowIdx => columns.slice(topLeft.colIdx, botRight.colIdx + 1).map(
-        // Grab the row values and make a text string
-        col => this.rowGetter(rowIdx)[col.key],
-      ).join('\t'),
-    ).join('\n');
-    console.debug('text', text);
-    e.clipboardData.setData('text/plain', text);
-  }
-
-  handlePaste = (e) => {
-    console.debug('handlePaste Called');
-    e.preventDefault();
-    const { topLeft } = this.state;
-
-    const newRows = [];
-    const pasteData = defaultParsePaste(e.clipboardData.getData('text/plain'));
-
-    console.debug('pasteData', pasteData);
-
-    pasteData.forEach((row) => {
-      const rowData = {};
-      // Merge the values from pasting and the keys from the columns
-      columns.slice(topLeft.colIdx, topLeft.colIdx + row.length)
-        .forEach((col, j) => {
-          // Create the key-value pair for the row
-          rowData[col.key] = row[j];
-        });
-      // Push the new row to the changes
-      newRows.push(rowData);
-    });
-
-    console.debug('newRows', newRows);
-
-    this.updateRows(topLeft.rowIdx, newRows);
-  }
-
-  onGridRowsUpdated = ({ fromRow, toRow, updated, action }) => {
-    console.debug('onGridRowsUpdated!', action);
-    console.debug('updated', updated);
-    if (action !== 'COPY_PASTE') {
-      this.setState((state) => {
-        const rows = state.rows.slice();
-        for (let i = fromRow; i <= toRow; i++) {
-          rows[i] = { ...rows[i], ...updated };
-        }
-        return { rows };
-      });
-    }
-  };
 
   setSelection = (args) => {
     this.setState({
@@ -195,13 +145,14 @@ class MyDataGrid extends Component {
           {rows.length !== 0 &&
             rows.map(el => {
               if (el.ESTADO === 'C') {
-                return <Convenio data={el} key={el._id} />
+                return <Convenio data={el} key={el.Id} handleSave={this.handleSave} />
               } else if (el.ESTADO === 'A') {
-                return <Teca data={el} key={el._id} />
+                return <Teca data={el} key={el.Id} handleSave={this.handleSave}/>
               }
             })
           }
-        <button onClick={this.handleLogout}>Salir</button>
+        <button onClick={this.handleLogout}>CERRAR SESION </button>
+        <button onClick={this.handleLogout}><img src={back} alt="ATRÁS"/> </button>
       </div>
     );
   }

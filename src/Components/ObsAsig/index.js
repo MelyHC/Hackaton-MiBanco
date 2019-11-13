@@ -155,21 +155,7 @@ class MyDataGrid extends Component {
 
     this.updateRows(topLeft.rowIdx, newRows);
   }
-  // componentWillMount() {
-  //   const currentRows = [];
-  //   db.collection("DataBase").get().then((doc) => {
-  //     doc.forEach(obs => {
-  //       currentRows.push(obs.data());
-  //       console.log(obs.data());
 
-  //     }
-  //     )
-  //     this.setState({ rows: currentRows });
-  //   }).catch((error) => {
-  //     console.log("ERROR:", error);
-  //   }
-  //   );
-  // }
   getFirebaseData = (client) => {
     let currentRows= this.state.rows;
     db.collection("DataBase").where("CODIGO_CLIENTE", '==', client).get().then((doc) => {

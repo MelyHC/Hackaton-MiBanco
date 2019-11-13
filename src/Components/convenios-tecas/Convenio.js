@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Form, Col, InputGroup, Button } from 'react-bootstrap';
 
-const Convenio = ({data}) => {
+const Convenio = ({data, handleSave }) => {
   const [key, setKey] = useState('home');
   const [validated, setValidated] = useState(false);
   const handleSubmit = event => {
@@ -12,13 +12,15 @@ const Convenio = ({data}) => {
     }
     setValidated(true);
   };
+  console.log(data)
   return (
+    
     <Tabs id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
       <Tab eventKey="home" title="Convenio">
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} md="3" controlId="validationCustom01">
-            <Form.Label>GERENTE TERRITORIO</Form.Label>
+            <Form.Label>GERENTE TERRITORIAL</Form.Label>
             <Form.Control
               required
               type="text"
@@ -53,8 +55,8 @@ const Convenio = ({data}) => {
         <Form.Row>
           <Form.Group as={Col} md="1" controlId="validationCustom03">
             <Form.Label>MONTO CUOTA</Form.Label>
-            <Form.Control type="text"  required />
-            <Form.Control.Feedback type="invalid">
+            <Form.Control type="text" />
+            <Form.Control.Feedback type="invalid" >
               Please provide a valid city.
             </Form.Control.Feedback>
           </Form.Group>
@@ -80,7 +82,11 @@ const Convenio = ({data}) => {
             </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
-        <Button variant="success" type="submit">GUARDAR</Button>
+        <Button variant="success"
+          size="lg"
+          onClick={handleSave }
+          type="submit"  
+        >GUARDAR</Button>
       </Form>
       </Tab>
     </Tabs>

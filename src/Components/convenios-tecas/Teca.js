@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Form, Col, InputGroup, Button } from 'react-bootstrap';
 
-const Teca = ({data}) => {
+const Teca = ({data, handleSave }) => {
   const [key, setKey] = useState('home');
   const [validated, setValidated] = useState(false);
   const handleSubmit = event => {
@@ -19,7 +19,7 @@ const Teca = ({data}) => {
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} md="3" controlId="validationCustom01">
-            <Form.Label>GERENTE TERRITORIO</Form.Label>
+            <Form.Label>GERENTE TERRITORIAL</Form.Label>
             <Form.Control
               required
               type="text"
@@ -89,7 +89,11 @@ const Teca = ({data}) => {
             </Form.Control.Feedback>
           </Form.Group>
         </Form.Row>
-        <Button variant="success" type="submit">GUARDAR</Button>
+        <Button variant="success"
+                    size="lg"
+                    onClick={handleSave}
+                    type="submit"  
+                    >GUARDAR</Button>
       </Form>
       </Tab>
     </Tabs>
