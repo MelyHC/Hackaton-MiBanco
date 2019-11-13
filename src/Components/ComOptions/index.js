@@ -12,6 +12,7 @@ class Options extends Component {
     render() {
         return(
             <React.Fragment>
+                <div className="menu-options">
                 <div className="cont-options">
                 <Header></Header>
                <div className="button-options">
@@ -30,25 +31,8 @@ class Options extends Component {
                 <span className="obs-res" >ASIGNACIÓN DE EJECUTIVOS</span>
                 <figure className="btn-obs-res"></figure>
                 </div>
-               {/* <Button variant="success"
-                  size="lg"
-                  onClick={this.handleClick}
-                  type="submit"  
-                  value="/register"
-                  >Registro de Convenio/ TECA</Button>
-                  <Button variant="success"
-                  size="lg"
-                  onClick={this.handleClick}
-                  type="submit"  
-                  value="/resumen"
-                  >Módulo de Resúmen</Button>
-                  <Button variant="success"
-                  size="lg"
-                  onClick={this.handleClick}
-                  type="submit"  
-                  value="/obs"
-                  >Observaciones de Asignación</Button> */}
                </div>
+                </div>
                 </div>
             </React.Fragment>
         )
