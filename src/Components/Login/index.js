@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { authUser } from '../../Firebase';
 import {Button, FormControl, InputGroup} from 'react-bootstrap';
 
+
 class Login extends Component  {
   state = {
     user: '',
