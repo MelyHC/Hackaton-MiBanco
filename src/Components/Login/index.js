@@ -11,7 +11,7 @@ class Login extends Component  {
     e.preventDefault();
     authUser(this.state.user, this.state.password)
     .then(()=>{
-      this.props.history.push("/resume");
+      this.props.history.push("/register");
     })
     .catch((e) => {
       alert(e.message);
