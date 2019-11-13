@@ -210,3 +210,27 @@ justify-content: center;
 .btn-header{
     padding-left: 5em;
 }
+
+
+.table{
+    display: inline-block;
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #212529;
+    overflow: scroll;
+}
+
+.col-6{
+    flex: 0 0 50%;
+    max-width: 50%;
+    height: 50vh;
+}
+
+.popup{
+    background-color: lawngreen;
+}
+.mod-res{
+    width: 100%;
+}

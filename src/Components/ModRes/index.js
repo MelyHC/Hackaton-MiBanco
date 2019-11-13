@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { logout, db } from '../../Firebase';
-import { Header } from '../Header';
+import Popup from "reactjs-popup";
+
 
 class ModRes extends Component {
   state = {
@@ -108,11 +109,16 @@ class ModRes extends Component {
     this.setState({ clients: newArrClients });
   }
 
+  handlePopUp = () => {
+      this.props.history.push("/options");
+      this.updateAsig(); 
+  }
+
   render() {
     const { filterGroup, clients, agent } = this.state;
 
     return (
-      <div>
+      <div className="mod-res">
         <select name="zona" className="form-control m-2">
           <option value="LimaNorte">Lima Norte</option>
           <option value="LimaCentro">Lima Centro</option>
@@ -178,7 +184,11 @@ class ModRes extends Component {
             </table>
           </div>
         </div>
-        <button className="btn btn-success" onClick={this.updateAsig}>Guardar</button>
+        <Popup className="popup" trigger={<button className="btn btn-success">Guardar</button>} position="rigth">
+    <div>CAMBIOS REALIZADO EXITOSAMENTE</div>
+    <button onClick={this.handlePopUp}>ACEPTAR</button>
+  </Popup>
+        
         <button >Volver</button>
 
         <button onClick={this.handleLogout}>Salir</button>
