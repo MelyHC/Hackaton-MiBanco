@@ -20,7 +20,6 @@ class ModRes extends Component {
         }
         );
       }
-
     render() {
         return(
             <React.Fragment>
