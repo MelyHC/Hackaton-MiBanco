@@ -1,9 +1,7 @@
 import React from 'react';
 import ViewRegister from '../src/Components/convenios-tecas/ViewRegister';
-import View from '../src/Components/View';
-
-import './App.css';
-
+import ModResume from './Components/ModuloResumen';
+import Login from './Components/Login';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,15 +9,16 @@ import {
 } from "react-router-dom";
 
 function App() {
-  
-  return <Router>
-  <Switch>
-    <Route exact path="/register"> <ViewRegister/>
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login}></Route>
+        <Route exact path="/resume" component={ModResume}></Route>
+        <Route exact path="/register"> <ViewRegister/>
     </Route>
-    <Route exact path="/"> <View/>
-    </Route>
-  </Switch>
-</Router>
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
