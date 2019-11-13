@@ -19,7 +19,7 @@ class ModRes extends Component {
     const agent = [];
     db.collection("Comotuquieras").get().then((doc) => {
       doc.forEach(obs => {
-        obs.ID = obs.id;
+        obs.data().ID = obs.id;
         currentGroup.push(obs.data());
 
         if (!agent.find(({ name }) => name === obs.data().AGENCIA)) {
@@ -40,7 +40,8 @@ class ModRes extends Component {
     db.collection("DataBase").where("AGENCIA", "==", agencia).where("MODELO", "==", filter).get()
       .then((doc) => {
         doc.forEach(obs => {
-          obs.ID = obs.id;
+          obs.data().ID = obs.id;
+          console.log(obs.data().ID,  obs.id)
           currentRows.push(obs.data());
         })
         this.setState({ clients: currentRows });
@@ -83,10 +84,10 @@ class ModRes extends Component {
 
   updateAsig = () => {
     const { clients } = this.state;
-    clients.forEach(({ ID, AGENCIA, MODELO }) => {
-      console.log(ID)
-      db.collection("DataBase").doc(ID).update({
-        AGENCIA, MODELO
+    clients.forEach(client  => {
+      console.log(client)
+      db.collection("DataBase").doc(client.ID).update({
+        client
       })
         .then(() => {
           alert('Se agrego correctamente')
@@ -142,7 +143,7 @@ class ModRes extends Component {
                   <th scope="col">Saldo</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="scroll">
                 {
                   filterGroup.length !== 0 ? filterGroup.map(({ SALDO, AGENCIA, MODELO, CLIENTES }, key) =>
                     <tr key={key} onClick={() => this.selectAgent(AGENCIA, MODELO)}>
