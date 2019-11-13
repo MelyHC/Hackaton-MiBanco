@@ -46,7 +46,7 @@ class MyDataGrid extends Component {
     for (const key in obs.data()) {
         if (obs.data().hasOwnProperty(key)) {
         const element = obs.data()[key];
-        // console.log(key, element)
+        console.log(key, element)
         }
     }                                     
       }

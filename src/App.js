@@ -1,12 +1,12 @@
 import React from 'react';
+import ViewRegister from '../src/Components/convenios-tecas/ViewRegister';
+import ModResume from './Components/ModuloResumen';
+import Login from './Components/Login';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
 } from "react-router-dom";
-import ModResume from './Components/ModuloResumen';
-import Login from './Components/Login';
-
 
 function App() {
   return (
@@ -14,6 +14,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login}></Route>
         <Route exact path="/resume" component={ModResume}></Route>
+        <Route exact path="/register"> <ViewRegister/>
+    </Route>
       </Switch>
     </Router>
   );
