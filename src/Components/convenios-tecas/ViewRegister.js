@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDataGrid from 'react-data-grid'; // Tested with v5.0.4, earlier versions MAY NOT HAVE cellRangeSelection
-import { logout, db } from '../../Firebase';
+import { db } from '../../Firebase';
 import {Link} from 'react-router-dom';
 import { Form, Button} from 'react-bootstrap';
 import Convenio from './Convenio';

@@ -88,7 +88,6 @@ class MyDataGrid extends Component {
   }
 
   componentWillUnmount() {
-
     this.removeAllListeners();
   }
 
@@ -226,23 +225,26 @@ class MyDataGrid extends Component {
           onGridRowsUpdated={this.onGridRowsUpdated}
           enableCellSelect
           minColumnWidth={40}
+          minHeight={200}
           cellRangeSelection={{
             onComplete: this.setSelection,
           }}
         />
       </div>
+          <div>
 
-        <Button variant="success"
+        <Button variant="outline-success"
                     size="lg"
                     onClick={this.handleLogout}
                     >Salir</Button>
 
-         <Button variant="success"
+         <Button variant="outline-success"
                     size="lg"
                     onClick={this.handleSave}
                     type="submit"  
                     >Guardar</Button>
       
+          </div>
       </div>
 
     );
