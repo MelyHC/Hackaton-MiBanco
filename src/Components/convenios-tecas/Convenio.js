@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Form, Col, InputGroup, Button } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 
 const Convenio = ({data, handleSave }) => {
   const [key, setKey] = useState('home');
@@ -14,9 +15,8 @@ const Convenio = ({data, handleSave }) => {
   };
   console.log(data)
   return (
-    
     <Tabs id="controlled-tab-example" activeKey={key} onSelect={k => setKey(k)}>
-      <Tab eventKey="home" title="Convenio">
+      <Tab eventKey="home" title="CONVENIO">
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
         <Form.Row>
           <Form.Group as={Col} md="3" controlId="validationCustom01">
@@ -53,7 +53,7 @@ const Convenio = ({data, handleSave }) => {
           </Form.Group>
         </Form.Row>
         <Form.Row>
-          <Form.Group as={Col} md="1" controlId="validationCustom03">
+          <Form.Group as={Col} md="2" controlId="validationCustom03">
             <Form.Label>MONTO CUOTA</Form.Label>
             <Form.Control type="text" />
             <Form.Control.Feedback type="invalid" >
@@ -67,14 +67,14 @@ const Convenio = ({data, handleSave }) => {
               Please provide a valid state.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md="1" controlId="validationCustom05">
+          <Form.Group as={Col} md="2" controlId="validationCustom05">
             <Form.Label>FECHA DE INICIO</Form.Label>
             <Form.Control type="text" required />
             <Form.Control.Feedback type="invalid">
               Please provide a valid zip.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group as={Col} md="1" controlId="validationCustom06">
+          <Form.Group as={Col} md="2" controlId="validationCustom06">
             <Form.Label>FECHA DE VCTO.</Form.Label>
             <Form.Control type="text"  required />
             <Form.Control.Feedback type="invalid">
@@ -87,6 +87,7 @@ const Convenio = ({data, handleSave }) => {
           onClick={handleSave }
           type="submit"  
         >GUARDAR</Button>
+        <Link className="link-reg" to ="/options"><Button variant="success"  size="lg">VOLVER</Button></Link>
       </Form>
       </Tab>
     </Tabs>
