@@ -41,7 +41,7 @@ class ModRes extends Component {
       .then((doc) => {
         doc.forEach(obs => {
           obs.data().ID = obs.id;
-          console.log(obs.data().ID,  obs.id)
+          console.log(obs.data().ID, obs.id)
           currentRows.push(obs.data());
         })
         this.setState({ clients: currentRows });
@@ -84,7 +84,7 @@ class ModRes extends Component {
 
   updateAsig = () => {
     const { clients } = this.state;
-    clients.forEach(client  => {
+    clients.forEach(client => {
       console.log(client)
       db.collection("DataBase").doc(client.ID).update({
         client
@@ -111,8 +111,8 @@ class ModRes extends Component {
   }
 
   handlePopUp = () => {
-      this.props.history.push("/options");
-      this.updateAsig(); 
+    this.props.history.push("/options");
+    this.updateAsig();
   }
 
   render() {
@@ -121,24 +121,24 @@ class ModRes extends Component {
     return (
       <div className="mod-res">
         <header className="d-flex justify-content-between align-items-center border">
-          <figure className="logo-header"></figure> 
+          <figure className="logo-header"></figure>
           <h1 className="">ASIGNACIÓN DE EJECUTIVOS</h1>
           <button className="btn" onClick={this.handleLogout}>Salir</button>
         </header>
         <div className="d-flex p-4 ">
-        <select name="zona" className="form-control m-2 w-auto">
-          <option value="LimaNorte">Lima Norte</option>
-          <option value="LimaCentro">Lima Centro</option>
-          <option value="LImaSur">Lima Sur</option>
-        </select>
-        <select name="Modelo" className="form-control m-2 w-auto" onChange={(e) => this.filterData(e)}>
-          <option disable="true" selected hidden>Modulo</option>
-          <option value="Todos">Todos</option>
-          <option value="Recuperación">Recuperación</option>
-          <option value="Inhibición">Inhibición</option>
-          <option value="Multitramo">Multitramo</option>
-          <option value="Resolución">Resolución</option>
-        </select>
+          <select name="zona" className="form-control m-2 w-auto">
+            <option value="LimaNorte">Lima Norte</option>
+            <option value="LimaCentro">Lima Centro</option>
+            <option value="LImaSur">Lima Sur</option>
+          </select>
+          <select name="Modelo" className="form-control m-2 w-auto" onChange={(e) => this.filterData(e)}>
+            <option disable="true" selected hidden>Modulo</option>
+            <option value="Todos">Todos</option>
+            <option value="Recuperación">Recuperación</option>
+            <option value="Inhibición">Inhibición</option>
+            <option value="Multitramo">Multitramo</option>
+            <option value="Resolución">Resolución</option>
+          </select>
         </div>
         <div className="row m-0 p-0">
           <div className="scroll col-md-6">
@@ -175,7 +175,7 @@ class ModRes extends Component {
                 {clients.length !== 0 ? clients.map(({ EDR_ASIGNADO, ID }) =>
                   <tr>
                     <td>{EDR_ASIGNADO}</td>
-                    <td><select name="AGENCIA" className="form-control m-2" onChange={(e) => this.updateStateAsig(e,ID)} >
+                    <td><select name="AGENCIA" className="form-control m-2" onChange={(e) => this.updateStateAsig(e, ID)} >
                       <option disable="true" selected hidden>Agencia</option>
                       {agent.map(({ name }) => <option value={name}>{name}</option>)}
                     </select></td>
@@ -193,12 +193,14 @@ class ModRes extends Component {
           </div>
         </div>
         <div className="d-flex justify-content-center">
-        <Popup className="popup" trigger={<button className="btn btn-success rounded-pill m-3 px-4">Guardar</button>} position="rigth">
-    <div>CAMBIOS REALIZADO EXITOSAMENTE</div>
-    <button onClick={this.handlePopUp}>ACEPTAR</button>
-  </Popup>
-        
-        <button className="btn m-3 px-4">Volver</button>
+          <Popup className="popup" trigger={<button className="btn btn-success rounded-pill m-3 px-4">Guardar</button>} modal>
+            <div className="modal p-4">
+              <div className="p-4 text-align-center">CAMBIOS REALIZADO EXITOSAMENTE</div>
+              <button onClick={this.handlePopUp}>ACEPTAR</button>
+            </div>
+          </Popup>
+
+          <button className="btn m-3 px-4">Volver</button>
         </div>
       </div>
     );
