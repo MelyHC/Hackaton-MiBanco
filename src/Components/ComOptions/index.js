@@ -16,15 +16,15 @@ class Options extends Component {
                 <div className="cont-options">
                 <Header></Header>
                <div className="button-options">
-                <div className="row">
-<div className="col-5">
+                <div className="row p-0 m-0">
+<div className="col-md-5">
                 <div className="card m-3" data-value="/obs" onClick={this.handleClick}>
                 <span className="obs-asig card-body p-4 rounded-top" >OBSERVACIONES DE ASIGNACIÓN</span>
                 <figure className="btn-obs-asig img-fluid mb-0"></figure>
                 </div>
                 </div>
                 
-                <div className="col-7">
+                <div className="col-md-7">
                 <div className="card m-3" data-value="/register" onClick={this.handleClick}>
                 <span className="obs-ct card-body p-4 rounded-top" >CONVENIOS Y TECAS</span>
                 <figure className="btn-obs-ct img-fluid mb-0"></figure>
