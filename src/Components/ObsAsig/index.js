@@ -63,7 +63,6 @@ class MyDataGrid extends Component {
     document.addEventListener('paste', this.handlePaste);
   }
 
-
   handleLogout = (e) => {
     e.preventDefault();
     logout()
