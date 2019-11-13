@@ -21,11 +21,11 @@ class ModRes extends Component {
         obs.ID = obs.id;
         currentGroup.push(obs.data());
 
-        if (agent.find(({ name }) => name !== obs.data().AGENCIA)) {
+        if (!agent.find(({ name }) => name === obs.data().AGENCIA)) {
+
           agent.push({ name: obs.data().AGENCIA })
         }
       })
-
       this.setState({ group: currentGroup, filterGroup: currentGroup, agent });
     }).catch((error) => {
       console.log("ERROR:", error);
@@ -36,9 +36,10 @@ class ModRes extends Component {
   selectAgent = (agencia, filter) => {
     const currentRows = [];
 
-    db.collection("Comotuquieras").where("AGENCIA", "==", agencia).where("MODELO", "==", filter).get()
+    db.collection("DataBase").where("AGENCIA", "==", agencia).where("MODELO", "==", filter).get()
       .then((doc) => {
         doc.forEach(obs => {
+          obs.ID = obs.id;
           currentRows.push(obs.data());
         })
         this.setState({ clients: currentRows });
@@ -46,7 +47,6 @@ class ModRes extends Component {
         console.log("ERROR:", error);
       });
   }
-
 
   handleLogout = (e) => {
     e.preventDefault();
@@ -71,18 +71,44 @@ class ModRes extends Component {
       },
     });
   };
-  updateRow = () => { }
 
   filterData = (e) => {
     const { group } = this.state;
     const currentFilter = e.target.value;
     const newArrFilter = currentFilter === 'Todos' ? group : group.filter(({ MODELO }) => MODELO === currentFilter)
-    console.log(newArrFilter)
+
     this.setState({ filterGroup: newArrFilter })
   }
 
+  updateAsig = () => {
+    const { clients } = this.state;
+    clients.forEach(({ ID, AGENCIA, MODELO }) => {
+      db.collection("DataBase").doc(ID).update({
+        AGENCIA, MODELO
+      })
+        .then(() => {
+          alert('Se agrego correctamente')
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+        });
+    })
+  }
+
+  updateStateAsig = (e, id) => {
+    const { clients } = this.state;
+    const newArrClients = clients.map(client => {
+      if (client.ID === id) {
+        client[e.target.name] = e.target.value
+      }
+      return client
+    })
+    this.setState({ clients: newArrClients });
+  }
+
   render() {
-    const { filterGroup, clients } = this.state;
+    const { filterGroup, clients, agent } = this.state;
 
     return (
       <Fragment>
@@ -99,37 +125,61 @@ class ModRes extends Component {
           <option value="Multitramo">Multitramo</option>
           <option value="Resolución">Resolución</option>
         </select>
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">Agencia</th>
-              <th scope="col">Clientes</th>
-              <th scope="col">Saldo</th>
-              <th scope="col">EDR</th>
-              <th scope="col">Agencia</th>
-              <th scope="col">Tramo</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              filterGroup.length !== 0 ? filterGroup.map(({ SALDO, AGENCIA, MODELO, CLIENTES }, key) =>
-                <tr key={key} onClick={() => this.selectAgent(AGENCIA, MODELO)}>
-                  <th>{AGENCIA}</th>
-                  <td>{CLIENTES}</td>
-                  <td>{SALDO}</td>
-                  {clients.length !== 0 ? clients.map(({ EJECUTIVO }) =>
-                    <div>
-                      <th>{EJECUTIVO}</th>
-                      <td>{MODELO}</td>
+        <div className="row">
+          <div className="col-6">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Agencia</th>
+                  <th scope="col">Clientes</th>
+                  <th scope="col">Saldo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  filterGroup.length !== 0 ? filterGroup.map(({ SALDO, AGENCIA, MODELO, CLIENTES }, key) =>
+                    <tr key={key} onClick={() => this.selectAgent(AGENCIA, MODELO)}>
+                      <th>{AGENCIA}</th>
                       <td>{CLIENTES}</td>
                       <td>{SALDO}</td>
-                    </div>) : null}
-                </tr>) :
-                <tr>Cargando ...</tr>
-            }
+                    </tr>) :
+                    <tr>Cargando ...</tr>
+                }</tbody>
+            </table>
+          </div>
+          <div className="col-6">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">EDR</th>
+                  <th scope="col">Agencia</th>
+                  <th scope="col">Tramo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clients.length !== 0 ? clients.map(({ EDR_ASIGNADO, ID }) =>
+                  <tr>
+                    <td>{EDR_ASIGNADO}</td>
+                    <td><select name="AGENCIA" className="form-control m-2" onChange={(e) => this.updateStateAsig(e,ID)} >
+                      <option disable="true" selected hidden>Agencia</option>
+                      {agent.map(({ name }) => <option value={name}>{name}</option>)}
+                    </select></td>
+                    <td><select name="MODELO" className="form-control m-2" onChange={(e) => this.updateStateAsig(e, ID)}>
+                      <option disable="true" selected hidden>Tramo</option>
+                      <option value="Recuperación">Recuperación</option>
+                      <option value="Inhibición">Inhibición</option>
+                      <option value="Multitramo">Multitramo</option>
+                      <option value="Resolución">Resolución</option>
+                    </select></td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <button className="btn btn-success" onClick={this.updateAsig}>Guardar</button>
+        <button >Volver</button>
 
-          </tbody>
-        </table>
         <button onClick={this.handleLogout}>Salir</button>
       </Fragment>
     );
