@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { logout, db } from '../../Firebase';
 import { Header } from '../Header';
 
@@ -83,6 +83,7 @@ class ModRes extends Component {
   updateAsig = () => {
     const { clients } = this.state;
     clients.forEach(({ ID, AGENCIA, MODELO }) => {
+      console.log(ID)
       db.collection("DataBase").doc(ID).update({
         AGENCIA, MODELO
       })
@@ -111,7 +112,7 @@ class ModRes extends Component {
     const { filterGroup, clients, agent } = this.state;
 
     return (
-      <Fragment>
+      <div>
         <select name="zona" className="form-control m-2">
           <option value="LimaNorte">Lima Norte</option>
           <option value="LimaCentro">Lima Centro</option>
@@ -181,7 +182,7 @@ class ModRes extends Component {
         <button >Volver</button>
 
         <button onClick={this.handleLogout}>Salir</button>
-      </Fragment>
+      </div>
     );
   }
 }
