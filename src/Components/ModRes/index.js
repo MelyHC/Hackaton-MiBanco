@@ -1,37 +1,190 @@
-import React, {Component} from 'react';
-import { db } from '../../Firebase';
-
+import React, { Component } from 'react';
+import { logout, db } from '../../Firebase';
+import { Header } from '../Header';
 
 class ModRes extends Component {
+  state = {
+    group: [],
+    topLeft: {},
+    botRight: {},
+    filter: '',
+    filterGroup: [],
+    clients: [],
+    agent: []
+  };
 
-    componentWillMount() {
-        db.collection("ObsAsig").get().then((doc) => {
-          doc.forEach(obs => {
-        for (const key in obs.data()) {
-            if (obs.data().hasOwnProperty(key)) {
-            const element = obs.data()[key];
-            console.log(key, element)
-            }
-        }                                     
-          }
-          )
-        }).catch((error) => {
-          console.log("ERROR:", error);
+  componentDidMount() {
+    const currentGroup = [];
+    const agent = [];
+    db.collection("Comotuquieras").get().then((doc) => {
+      doc.forEach(obs => {
+        obs.ID = obs.id;
+        currentGroup.push(obs.data());
+
+        if (!agent.find(({ name }) => name === obs.data().AGENCIA)) {
+
+          agent.push({ name: obs.data().AGENCIA })
         }
-        );
-      }
-
-    render() {
-        return(
-            <React.Fragment>
-             <select name="zona">
-            <option value="value1">Value 1</option> 
-            <option value="value2" selected>Value 2</option>
-            <option value="value3">Value 3</option>
-            </select>
-            </React.Fragment>
-        )
+      })
+      this.setState({ group: currentGroup, filterGroup: currentGroup, agent });
+    }).catch((error) => {
+      console.log("ERROR:", error);
     }
+    );
+  }
+
+  selectAgent = (agencia, filter) => {
+    const currentRows = [];
+
+    db.collection("DataBase").where("AGENCIA", "==", agencia).where("MODELO", "==", filter).get()
+      .then((doc) => {
+        doc.forEach(obs => {
+          obs.ID = obs.id;
+          currentRows.push(obs.data());
+        })
+        this.setState({ clients: currentRows });
+      }).catch((error) => {
+        console.log("ERROR:", error);
+      });
+  }
+
+  handleLogout = (e) => {
+    e.preventDefault();
+    logout()
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch((e) => {
+        alert(e.message);
+      })
+  }
+
+  setSelection = (args) => {
+    this.setState({
+      topLeft: {
+        rowIdx: args.topLeft.rowIdx,
+        colIdx: args.topLeft.idx,
+      },
+      botRight: {
+        rowIdx: args.bottomRight.rowIdx,
+        colIdx: args.bottomRight.idx,
+      },
+    });
+  };
+
+  filterData = (e) => {
+    const { group } = this.state;
+    const currentFilter = e.target.value;
+    const newArrFilter = currentFilter === 'Todos' ? group : group.filter(({ MODELO }) => MODELO === currentFilter)
+
+    this.setState({ filterGroup: newArrFilter })
+  }
+
+  updateAsig = () => {
+    const { clients } = this.state;
+    clients.forEach(({ ID, AGENCIA, MODELO }) => {
+      console.log(ID)
+      db.collection("DataBase").doc(ID).update({
+        AGENCIA, MODELO
+      })
+        .then(() => {
+          alert('Se agrego correctamente')
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error("Error updating document: ", error);
+        });
+    })
+  }
+
+  updateStateAsig = (e, id) => {
+    const { clients } = this.state;
+    const newArrClients = clients.map(client => {
+      if (client.ID === id) {
+        client[e.target.name] = e.target.value
+      }
+      return client
+    })
+    this.setState({ clients: newArrClients });
+  }
+
+  render() {
+    const { filterGroup, clients, agent } = this.state;
+
+    return (
+      <div>
+        <select name="zona" className="form-control m-2">
+          <option value="LimaNorte">Lima Norte</option>
+          <option value="LimaCentro">Lima Centro</option>
+          <option value="LImaSur">Lima Sur</option>
+        </select>
+        <select name="Modelo" className="form-control m-2" onChange={(e) => this.filterData(e)}>
+          <option disable="true" selected hidden>Modulo</option>
+          <option value="Todos">Todos</option>
+          <option value="Recuperación">Recuperación</option>
+          <option value="Inhibición">Inhibición</option>
+          <option value="Multitramo">Multitramo</option>
+          <option value="Resolución">Resolución</option>
+        </select>
+        <div className="row">
+          <div className="col-6">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">Agencia</th>
+                  <th scope="col">Clientes</th>
+                  <th scope="col">Saldo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  filterGroup.length !== 0 ? filterGroup.map(({ SALDO, AGENCIA, MODELO, CLIENTES }, key) =>
+                    <tr key={key} onClick={() => this.selectAgent(AGENCIA, MODELO)}>
+                      <th>{AGENCIA}</th>
+                      <td>{CLIENTES}</td>
+                      <td>{SALDO}</td>
+                    </tr>) :
+                    <tr>Cargando ...</tr>
+                }</tbody>
+            </table>
+          </div>
+          <div className="col-6">
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">EDR</th>
+                  <th scope="col">Agencia</th>
+                  <th scope="col">Tramo</th>
+                </tr>
+              </thead>
+              <tbody>
+                {clients.length !== 0 ? clients.map(({ EDR_ASIGNADO, ID }) =>
+                  <tr>
+                    <td>{EDR_ASIGNADO}</td>
+                    <td><select name="AGENCIA" className="form-control m-2" onChange={(e) => this.updateStateAsig(e,ID)} >
+                      <option disable="true" selected hidden>Agencia</option>
+                      {agent.map(({ name }) => <option value={name}>{name}</option>)}
+                    </select></td>
+                    <td><select name="MODELO" className="form-control m-2" onChange={(e) => this.updateStateAsig(e, ID)}>
+                      <option disable="true" selected hidden>Tramo</option>
+                      <option value="Recuperación">Recuperación</option>
+                      <option value="Inhibición">Inhibición</option>
+                      <option value="Multitramo">Multitramo</option>
+                      <option value="Resolución">Resolución</option>
+                    </select></td>
+                  </tr>
+                ) : null}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <button className="btn btn-success" onClick={this.updateAsig}>Guardar</button>
+        <button >Volver</button>
+
+        <button onClick={this.handleLogout}>Salir</button>
+      </div>
+    );
+  }
 }
 
 export default ModRes;
