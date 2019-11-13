@@ -39,10 +39,8 @@ class MyDataGrid extends Component {
   }
 
   componentWillMount() {
-  
     db.collection("ObsAsig").get().then((doc) => {
       doc.forEach(obs => {
-      
     for (const key in obs.data()) {
         if (obs.data().hasOwnProperty(key)) {
         const element = obs.data()[key];
