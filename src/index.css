@@ -70,14 +70,21 @@
     
 
 /* FIN DE HEADER ----------------------------------------------------------------------------------*/
+.menu-options{
+    display: flex;
+    flex-wrap: wrap;
+}
+.cont-options{
+justify-content: center;
+    
+    flex-direction: row;
+}
 
 .cont-btn-asig{
-    max-height: min-content;
-    background-color:transparent;
-    width: 300px;
-   margin-top: 4em;
-   margin-left: 4em;
-   border-radius: 5px;
+    background-color: transparent;
+    width: 332px;
+    border-radius: 5px;
+    padding: 1em;
    }
    
    .btn-obs-asig{
@@ -96,11 +103,9 @@
    }
    
    .cont-btn-ct{
-       max-height: min-content;
+
        background-color: transparent;
        width: 300px;
-       bottom: 11em;
-       margin-left: 32em;
        border-radius: 5px;
       }
       
@@ -120,11 +125,10 @@
       }
    
       .cont-btn-res{
-       max-height: min-content;
+
        background-color: transparent;
        width: 300px;
-       bottom: 4em;
-       margin-left: 32em;
+
        border-radius: 5px;
       }
       
