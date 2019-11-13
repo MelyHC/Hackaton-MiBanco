@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import {Button} from 'react-bootstrap';
 import Header from '../Header';
 
 class Options extends Component {
 
     handleClick = (e) =>{
         e.preventDefault();
-        this.props.history.push(e.target.value);
+        this.props.history.push(e.currentTarget.dataset.value)
+        
     }
 
     render() {
@@ -15,9 +15,20 @@ class Options extends Component {
                 <div className="cont-options">
                 <Header></Header>
                <div className="button-options">
-                <div className="cont-btn-asig">
-                <span className="obs-asig" onClick={this.handleClick}>OBSERVACIONES DE ASIGNACIÓN</span>
+
+                <div className="cont-btn-asig" data-value="/obs" onClick={this.handleClick}>
+                <span className="obs-asig" >OBSERVACIONES DE ASIGNACIÓN</span>
                 <figure className="btn-obs-asig"></figure>
+                </div>
+
+                <div className="cont-btn-ct" data-value="/register" onClick={this.handleClick}>
+                <span className="obs-ct" >CONVENIOS Y TECAS</span>
+                <figure className="btn-obs-ct"></figure>
+                </div>
+
+                <div className="cont-btn-res" data-value="/res" onClick={this.handleClick}>
+                <span className="obs-res" >ASIGNACIÓN DE EJECUTIVOS</span>
+                <figure className="btn-obs-res"></figure>
                 </div>
                {/* <Button variant="success"
                   size="lg"
