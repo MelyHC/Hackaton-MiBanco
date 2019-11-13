@@ -8,7 +8,7 @@ import Teca from './Teca';
 
 
 const columns = [
-  { key: 'id', name: 'NRO', editable: true },
+  { key: 'Id', name: 'NRO', editable: true },
   { key: 'MODELO', name: 'MODELO', editable: true },
   { key: 'CODIGO_CLIENTE', name: 'CODIGO CLIENTE', editable: true },
   { key: 'NOMBRE_CLIENTE', name: 'NOMBRE CLIENTE', editable: true },
@@ -54,7 +54,8 @@ class MyDataGrid extends Component {
     }
     );
   }
-
+  
+  
 
   handleLogout = (e) => {
     e.preventDefault();
@@ -187,11 +188,21 @@ class MyDataGrid extends Component {
             onComplete: this.setSelection,
           }}
         />
-        <Convenio/>
-        <Teca/>
+        {rows.length === 0 &&
+            <div className="mt-5 w-100 text-align">
+            Elije al cliente para registrar el Convenio o Teca!!!
+            </div>}
+          {rows.length !== 0 &&
+            rows.map(el => {
+              if (el.ESTADO === 'C') {
+                return <Convenio data={el} key={el._id} />
+              } else if (el.ESTADO === 'A') {
+                return <Teca data={el} key={el._id} />
+              }
+            })
+          }
         <button onClick={this.handleLogout}>Salir</button>
       </div>
-
     );
   }
 }

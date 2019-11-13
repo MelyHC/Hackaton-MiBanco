@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Tabs, Tab, Form, Col, InputGroup, Button } from 'react-bootstrap';
 
-const Convenio = () => {
+const Convenio = ({data}) => {
   const [key, setKey] = useState('home');
   const [validated, setValidated] = useState(false);
   const handleSubmit = event => {
@@ -10,7 +10,6 @@ const Convenio = () => {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
   return (
@@ -23,6 +22,7 @@ const Convenio = () => {
             <Form.Control
               required
               type="text"
+              value={data.TERRITORIAL}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
@@ -31,18 +31,18 @@ const Convenio = () => {
             <Form.Control
               required
               type="text"
-
+              value={data.SUPERVISOR}
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>
           <Form.Group as={Col} md="2" controlId="validationCustomUsername">
             <Form.Label>EJECUTIVO</Form.Label>
             <InputGroup>
-          
               <Form.Control
                 type="text"
                 aria-describedby="inputGroupPrepend"
                 required
+                value={data.EJECUTIVO}
               />
               <Form.Control.Feedback type="invalid">
                 Please choose a username.
