@@ -1,54 +1,89 @@
 import React, { Component, Fragment } from 'react';
 import { logout, db } from '../../Firebase';
-import { Form } from 'react-bootstrap';
 import { Header } from '../Header';
 
 class ModRes extends Component {
   state = {
-    gruopTramo: [],
-    tramo: [{
-      dayInitial: 31,
-      dayEnd: 60
-    }, {
-      dayInitial: 61,
-      dayEnd: 120
-    }, {
-      dayInitial: 121,
-      dayEnd: 720
-    }, {
-      dayInitial: 721
-    }]
+    group: [],
+    topLeft: {},
+    botRight: {},
+    filter: '',
+    filterGroup: [],
+    clients: [],
+    agent: []
   };
 
-  componentWillMount() {
-    const { tramo } = this.state;
-    const currentTramo = [];
-    db.collection("DataBase").get().where("").then((doc) => {
+  componentDidMount() {
+    const currentGroup = [];
+    const agent = [];
+    db.collection("Comotuquieras").get().then((doc) => {
       doc.forEach(obs => {
-        currentTramo.push(obs.data());
-      })
-      // currentTramo.forEach (tramo =>{
-      //   const obj = {};
-        
-      // })
-      const data = currentTramo.reduce((result, current) => {
-        // result.AGENCIA = result[current.AGENCIA] || []
-        // result.MODELO = result[current.MODELO] || [];
-        result[current.AGENCIA] = result[current.AGENCIA] || [];
+        obs.ID = obs.id;
+        currentGroup.push(obs.data());
 
-        result[current.AGENCIA].push(current);
-        return result;
-      },{});
-      console.log(data);
-      this.setState({ rows: currentTramo });
+        if (agent.find(({ name }) => name !== obs.data().AGENCIA)) {
+          agent.push({ name: obs.data().AGENCIA })
+        }
+      })
+
+      this.setState({ group: currentGroup, filterGroup: currentGroup, agent });
     }).catch((error) => {
       console.log("ERROR:", error);
     }
     );
   }
 
+  selectAgent = (agencia, filter) => {
+    const currentRows = [];
+
+    db.collection("Comotuquieras").where("AGENCIA", "==", agencia).where("MODELO", "==", filter).get()
+      .then((doc) => {
+        doc.forEach(obs => {
+          currentRows.push(obs.data());
+        })
+        this.setState({ clients: currentRows });
+      }).catch((error) => {
+        console.log("ERROR:", error);
+      });
+  }
+
+
+  handleLogout = (e) => {
+    e.preventDefault();
+    logout()
+      .then(() => {
+        this.props.history.push("/");
+      })
+      .catch((e) => {
+        alert(e.message);
+      })
+  }
+
+  setSelection = (args) => {
+    this.setState({
+      topLeft: {
+        rowIdx: args.topLeft.rowIdx,
+        colIdx: args.topLeft.idx,
+      },
+      botRight: {
+        rowIdx: args.bottomRight.rowIdx,
+        colIdx: args.bottomRight.idx,
+      },
+    });
+  };
+  updateRow = () => { }
+
+  filterData = (e) => {
+    const { group } = this.state;
+    const currentFilter = e.target.value;
+    const newArrFilter = currentFilter === 'Todos' ? group : group.filter(({ MODELO }) => MODELO === currentFilter)
+    console.log(newArrFilter)
+    this.setState({ filterGroup: newArrFilter })
+  }
+
   render() {
-    const { rows } = this.state;
+    const { filterGroup, clients } = this.state;
+
     return (
       <Fragment>
         <select name="zona" className="form-control m-2">
@@ -56,11 +91,18 @@ class ModRes extends Component {
           <option value="LimaCentro">Lima Centro</option>
           <option value="LImaSur">Lima Sur</option>
         </select>
+        <select name="Modelo" className="form-control m-2" onChange={(e) => this.filterData(e)}>
+          <option disable="true" selected hidden>Modulo</option>
+          <option value="Todos">Todos</option>
+          <option value="Recuperación">Recuperación</option>
+          <option value="Inhibición">Inhibición</option>
+          <option value="Multitramo">Multitramo</option>
+          <option value="Resolución">Resolución</option>
+        </select>
         <table className="table">
           <thead>
             <tr>
               <th scope="col">Agencia</th>
-              <th scope="col">Tramo</th>
               <th scope="col">Clientes</th>
               <th scope="col">Saldo</th>
               <th scope="col">EDR</th>
@@ -69,32 +111,29 @@ class ModRes extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
-            </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>@fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>@twitter</td>
-            </tr>
+            {
+              filterGroup.length !== 0 ? filterGroup.map(({ SALDO, AGENCIA, MODELO, CLIENTES }, key) =>
+                <tr key={key} onClick={() => this.selectAgent(AGENCIA, MODELO)}>
+                  <th>{AGENCIA}</th>
+                  <td>{CLIENTES}</td>
+                  <td>{SALDO}</td>
+                  {clients.length !== 0 ? clients.map(({ EJECUTIVO }) =>
+                    <div>
+                      <th>{EJECUTIVO}</th>
+                      <td>{MODELO}</td>
+                      <td>{CLIENTES}</td>
+                      <td>{SALDO}</td>
+                    </div>) : null}
+                </tr>) :
+                <tr>Cargando ...</tr>
+            }
+
           </tbody>
         </table>
-
+        <button onClick={this.handleLogout}>Salir</button>
       </Fragment>
-
     );
   }
 }
 
 export default ModRes;
-
