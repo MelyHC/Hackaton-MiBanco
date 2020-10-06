@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { logout, db } from '../../Firebase';
 import Popup from "reactjs-popup";
+import { Link } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 
 class ModRes extends Component {
@@ -120,11 +122,22 @@ class ModRes extends Component {
 
     return (
       <div className="mod-res">
-        <header className="d-flex justify-content-between align-items-center border">
-          <figure className="logo-header"></figure>
+        <header className=" button-reg">
+          <div>
+            <figure className="logo-header"></figure>
+          </div>
+          <div>
+            <h3 className="h1-header">ASIGNACIÓN DE EJECUTIVOS</h3>
+          </div>
+          <div>  <Link className="link-reg" to="/"><Button variant="outline-success" type="submit" ><b> SALIR</b> </Button></Link>
+          </div>
+        </header>
+
+        {/* <header className="d-flex justify-content-between align-items-center border">
+          <figure className="logo-header"></figure> 
           <h1 className="">ASIGNACIÓN DE EJECUTIVOS</h1>
           <button className="btn" onClick={this.handleLogout}>Salir</button>
-        </header>
+        </header> */}
         <div className="d-flex p-4 ">
           <select name="zona" className="form-control m-2 w-auto">
             <option value="LimaNorte">Lima Norte</option>
@@ -194,13 +207,13 @@ class ModRes extends Component {
         </div>
         <div className="d-flex justify-content-center">
           <Popup className="popup" trigger={<button className="btn btn-success rounded-pill m-3 px-4">Guardar</button>} modal>
-            <div className="modal p-4">
-              <div className="p-4 text-align-center">CAMBIOS REALIZADO EXITOSAMENTE</div>
-              <button onClick={this.handlePopUp}>ACEPTAR</button>
+            <div className="modal">
+              <div className="">CAMBIOS REALIZADO EXITOSAMENTE</div>
+              <button className="btn" onClick={this.handlePopUp}>ACEPTAR</button>
             </div>
           </Popup>
 
-          <button className="btn m-3 px-4">Volver</button>
+          <button className="btn m-3 px-4" onClick={this.handlePopUp}>Volver</button>
         </div>
       </div>
     );
